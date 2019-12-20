@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlayerInv">
+
+    <TextView
+        android:id="@+id/calorieDisplay"
+        android:layout_width="85dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/caloriedisplay"
+        app:layout_constraintEnd_toEndOf="@+id/healthDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/healthDisplay" />
+
+    <TextView
+        android:id="@+id/healthDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="healthDisplay"
+        app:layout_constraintEnd_toEndOf="@+id/characterInventoryPageHeader"
+        app:layout_constraintTop_toBottomOf="@+id/characterInventoryPageHeader" />
+
+    <TextView
+        android:id="@+id/healthDisplayTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/your_health"
+        app:layout_constraintEnd_toStartOf="@+id/healthDisplay"
+        app:layout_constraintStart_toStartOf="@+id/characterInventoryPageHeader"
+        app:layout_constraintTop_toBottomOf="@+id/characterInventoryPageHeader" />
+
+    <TextView
+        android:id="@+id/characterInventoryPageHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="&quot;@CharacterName's Inventory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/calorieDisplayTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Calories"
+        app:layout_constraintEnd_toStartOf="@+id/calorieDisplay"
+        app:layout_constraintStart_toStartOf="@+id/characterInventoryPageHeader"
+        app:layout_constraintTop_toBottomOf="@+id/healthDisplayTitle" />
+
+    <TextView
+        android:id="@+id/thirstDisplay"
+        android:layout_width="85dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:text="thirstDisplay"
+        app:layout_constraintEnd_toEndOf="@+id/calorieDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/calorieDisplay" />
+
+    <TextView
+        android:id="@+id/thirstDisplayTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Thirst"
+        app:layout_constraintEnd_toStartOf="@+id/thirstDisplay"
+        app:layout_constraintStart_toStartOf="@+id/characterInventoryPageHeader"
+        app:layout_constraintTop_toBottomOf="@+id/calorieDisplayTitle" />
+
+    <TextView
+        android:id="@+id/tempratureDisplay"
+        android:layout_width="84dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:text="tempDisplay"
+        app:layout_constraintEnd_toEndOf="@+id/thirstDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/thirstDisplay" />
+
+    <TextView
+        android:id="@+id/tempratureDisplayTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Temprature"
+        app:layout_constraintEnd_toStartOf="@+id/tempratureDisplay"
+        app:layout_constraintStart_toStartOf="@+id/characterInventoryPageHeader"
+        app:layout_constraintTop_toBottomOf="@+id/thirstDisplayTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

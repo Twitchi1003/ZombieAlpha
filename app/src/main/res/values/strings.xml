@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ZombieAlpha</string>
+    <string name="your_health">Your Health</string>
+    <string name="caloriedisplay">CalorieDisplay</string>
+</resources>
