@@ -2,6 +2,9 @@ package com.example.zombiealpha;
 
 import android.app.Application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CharacterSheet extends Application {
 
     //stats
@@ -60,5 +63,17 @@ public class CharacterSheet extends Application {
 
     //inventory
 
+    List<Item> Inventory = new ArrayList<Item>();
 
+        public List<Item> getInventory() {
+            return Inventory;
+            }
+
+        public void addToInv(Item Item){
+            Inventory.add(Item);
+        }
+
+        public void removeItem(Item item){
+            Inventory.remove(item);
+        }
 }

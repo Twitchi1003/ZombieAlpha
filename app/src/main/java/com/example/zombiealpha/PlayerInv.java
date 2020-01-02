@@ -2,7 +2,10 @@ package com.example.zombiealpha;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class PlayerInv extends AppCompatActivity {
@@ -35,6 +38,18 @@ public class PlayerInv extends AppCompatActivity {
         Thirst =  ((CharacterSheet) this.getApplication()).getThirst();
         PlayerThirst.setText(Integer.toString(Thirst));
 
+        TextView playerInventory = findViewById(R.id.playerInventory);
+        //playerInventory.setText(); figure out how to extract ArrayList contents and display
+
+
+        //Navigation Buttons
+        Button InvToMap = findViewById(R.id.ButtonInvToMap);
+        InvToMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), Map.class);
+                view.getContext().startActivity(intent);}
+        });
 
     }
 }
