@@ -28,13 +28,19 @@ public class Map extends AppCompatActivity {
         GiveFood.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Food foundFood = new Food();
-                                            //link to charactersheet Inventory.addToInv(foundFood)
+                                                giveFood();
                                         }
                                     }
 
-
         );
+
+
+
+    }
+
+    private void giveFood(){
+        Food foundFood = new Food();
+        ((CharacterSheet) this.getApplication()).addToInv(foundFood);
 
     }
 }

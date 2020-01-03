@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class PlayerInv extends AppCompatActivity {
 
 
@@ -15,6 +17,7 @@ public class PlayerInv extends AppCompatActivity {
     private int BodyTemp = 0;
     private int Calories = 0;
     private int Thirst = 0;
+    private ArrayList<Item> Inv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,9 @@ public class PlayerInv extends AppCompatActivity {
         PlayerThirst.setText(Integer.toString(Thirst));
 
         TextView playerInventory = findViewById(R.id.playerInventory);
+        Inv = (ArrayList<Item>) ((CharacterSheet) this.getApplication()).getInventory();
+        playerInventory.setText(Inv.toString());
+
         //playerInventory.setText(); figure out how to extract ArrayList contents and display
 
 
