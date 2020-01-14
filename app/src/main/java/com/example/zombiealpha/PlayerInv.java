@@ -1,6 +1,8 @@
 package com.example.zombiealpha;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,9 @@ public class PlayerInv extends AppCompatActivity {
     private int Calories = 0;
     private int Thirst = 0;
     private ArrayList<Item> Inv;
+
+    private RecyclerView InventoryRecycler;
+    private RecyclerView.Adapter InvAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +46,16 @@ public class PlayerInv extends AppCompatActivity {
         Thirst =  ((CharacterSheet) this.getApplication()).getThirst();
         PlayerThirst.setText(Integer.toString(Thirst));
 
-        TextView playerInventory = findViewById(R.id.playerInventory);
-        Inv = (ArrayList<Item>) ((CharacterSheet) this.getApplication()).getInventory();
-        playerInventory.setText(Inv.toString());
 
-        //playerInventory.setText(); figure out how to extract ArrayList contents and display
+
+        Inv = (ArrayList<Item>) ((CharacterSheet) this.getApplication()).getInventory();
+        //Inv is player inventory.. need to get into adapter
+
+        RecyclerView InventoryRecycler = findViewById(R.id.InventoryRecyclerView);
+        InventoryRecycler.setLayoutManager(new LinearLayoutManager(this));
+        InvAdapter = new InventoryAdaptor(Inv,this);
+        InventoryRecycler.setAdapter(InvAdapter);
+
 
 
         //Navigation Buttons

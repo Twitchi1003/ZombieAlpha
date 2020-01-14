@@ -14,7 +14,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button gotoCharacter = (Button)findViewById(R.id.gotoCharacter);
+        //Nav Buttons
+
+        Button gotoCharacter = findViewById(R.id.gotoCharacter);
 
         gotoCharacter.setOnClickListener(new View.OnClickListener() {
             @Override

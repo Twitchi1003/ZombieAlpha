@@ -16,13 +16,14 @@
         app:layout_constraintTop_toBottomOf="@+id/healthDisplay" />
 
     <TextView
-        android:id="@+id/healthDisplay"
+        android:id="@+id/characterInventoryPageHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="healthDisplay"
-        app:layout_constraintEnd_toEndOf="@+id/characterInventoryPageHeader"
-        app:layout_constraintTop_toBottomOf="@+id/characterInventoryPageHeader" />
+        android:layout_marginTop="24dp"
+        android:text="&quot;@CharacterName's Inventory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/healthDisplayTitle"
@@ -35,14 +36,13 @@
         app:layout_constraintTop_toBottomOf="@+id/characterInventoryPageHeader" />
 
     <TextView
-        android:id="@+id/characterInventoryPageHeader"
+        android:id="@+id/healthDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="&quot;@CharacterName's Inventory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="32dp"
+        android:text="healthDisplay"
+        app:layout_constraintEnd_toEndOf="@+id/characterInventoryPageHeader"
+        app:layout_constraintTop_toBottomOf="@+id/characterInventoryPageHeader" />
 
     <TextView
         android:id="@+id/calorieDisplayTitle"
@@ -96,22 +96,27 @@
         android:id="@+id/ButtonInvToMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:text="MapScreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.848"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/playerInventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Put Inventory Here"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/InventoryRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginBottom="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintTop_toBottomOf="@+id/tempratureDisplay"
+        app:layout_constraintVertical_bias="0.537" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
