@@ -63,7 +63,7 @@ public class CharacterSheet extends Application {
 
     //inventory
 
-    List<Item> Inventory = new ArrayList<Item>();
+    List<Item> Inventory = new ArrayList<>();
 
         public List<Item> getInventory() {
             return Inventory;
@@ -73,7 +73,11 @@ public class CharacterSheet extends Application {
             Inventory.add(Item);
         }
 
-        public void removeItem(Item item){
+        public void removeFromInv(Item item){
             Inventory.remove(item);
+        }
+
+        public Item getSingleInv (int Index){
+            return Inventory.get(Index);
         }
 }

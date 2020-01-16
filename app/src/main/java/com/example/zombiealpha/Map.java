@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -35,8 +36,6 @@ public class Map extends AppCompatActivity {
 
         );
 
-
-
     }
 
     private void giveFood(){
@@ -44,6 +43,7 @@ public class Map extends AppCompatActivity {
         ((CharacterSheet) this.getApplication()).addToInv(foundFood);
 
         Toast toast = Toast.makeText(getApplicationContext(),"Food Given  " + foundFood.toString(),Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM,0,0);
         toast.show();
 
     }

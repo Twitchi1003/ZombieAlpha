@@ -2,11 +2,13 @@ package com.example.zombiealpha;
 
 import android.content.Context;
 import android.media.Image;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +22,7 @@ public class InventoryAdaptor extends RecyclerView.Adapter<InventoryAdaptor.Inve
     private ArrayList<Item> Inventory;
     private Context context;
 
-    public InventoryAdaptor(ArrayList<Item> _inventory, Context _context) {
+    InventoryAdaptor(ArrayList<Item> _inventory, Context _context) {
         Inventory = _inventory;
         this.context = _context;
     }
@@ -47,21 +49,37 @@ public class InventoryAdaptor extends RecyclerView.Adapter<InventoryAdaptor.Inve
         return Inventory.size();
     }
 
-    public class InventoryViewHolder extends RecyclerView.ViewHolder {
+    public class InventoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        public ImageView ItemIcon;
-        public TextView TitleText;
-        public TextView DescriptionText;
+        ImageView ItemIcon;
+        TextView TitleText;
+        TextView DescriptionText;
 
 
-        public InventoryViewHolder(@NonNull View itemView) {
+        InventoryViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            itemView.setOnLongClickListener(this);
             ItemIcon = itemView.findViewById(R.id.InventoryItemIcon);
             TitleText = itemView.findViewById(R.id.InvTitle);
             DescriptionText = itemView.findViewById(R.id.InvDescription);
+        }
 
+        @Override
+        public void onClick(View v) {
+            //do a select thing here.. out lne view or something
+        }
 
+        @Override
+        public boolean onLongClick(View v) {
+            int  pos  = getLayoutPosition();
+            Item offender = Inventory.get(pos);
+            ((CharacterSheet) context.getApplicationContext()).removeFromInv(offender);
+            notifyItemRemoved(pos);
+            return true;
         }
     }
+
+
+
 }
