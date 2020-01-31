@@ -2,4 +2,5 @@
     <string name="app_name">ZombieAlpha</string>
     <string name="your_health">Your Health</string>
     <string name="caloriedisplay">CalorieDisplay</string>
+    <string name="title_activity_zombie_map">ZombieMap</string>
 </resources>

@@ -25,6 +25,7 @@ public class Map extends AppCompatActivity {
                 view.getContext().startActivity(intent);}
         });
 
+
     //alpha give player stuff buttons
         Button GiveFood = findViewById(R.id.GiveFood);
         GiveFood.setOnClickListener(new View.OnClickListener() {
@@ -33,11 +34,8 @@ public class Map extends AppCompatActivity {
                                                 giveFood();
                                         }
                                     }
-
         );
-
     }
-
     private void giveFood(){
         Food foundFood = new Food();
         ((CharacterSheet) this.getApplication()).addToInv(foundFood);
@@ -45,6 +43,7 @@ public class Map extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(),"Food Given  " + foundFood.toString(),Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM,0,0);
         toast.show();
-
     }
+
+
 }

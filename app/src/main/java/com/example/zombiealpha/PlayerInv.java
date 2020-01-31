@@ -63,7 +63,7 @@ public class PlayerInv extends AppCompatActivity {
         InvToMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Map.class);
+                Intent intent = new Intent(view.getContext(), ZombieMapActivity.class);
                 view.getContext().startActivity(intent);}
         });
 
