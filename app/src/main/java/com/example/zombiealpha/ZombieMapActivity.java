@@ -6,8 +6,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -16,19 +14,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PointOfInterest;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
-public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+import java.util.Arrays;
+import java.util.List;
+
+public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnPoiClickListener {
 
     private GoogleMap mMap;
     private final int PERM_REQUEST_LOCATION_INT = 1;
-
-
+    private FusedLocationProviderClient FusedLocationClient;
+    private String apiKey;
 
 
     @Override
@@ -41,13 +50,21 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
         //navigation
-        Button leaveMap = (Button) findViewById(R.id.leaveMap);
+        Button leaveMap = findViewById(R.id.leaveMap);
         leaveMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), PlayerInv.class);
                 view.getContext().startActivity(intent);}
         });
+
+        //location
+        FusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //places API stuff
+        apiKey  = getResources().getString(R.string.google_maps_key);
+        Places.initialize(getApplicationContext(), apiKey);
+
     }
 
 
@@ -69,7 +86,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                 }
             }
         else {
-//            Toast.makeText(getApplicationContext(), "HAVE perms", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "HAVE perms", Toast.LENGTH_SHORT).show();
             mapSetup();
         }
     }
@@ -100,22 +117,73 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
     }
 
     private void mapSetup() {
+        //type and Visuals
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.setMinZoomPreference(18.0f);
+
+
+        //location and markers
         mMap.setMyLocationEnabled(true);
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
+        mMap.setOnPoiClickListener(this);
+
+
         mMap.getUiSettings().setZoomControlsEnabled(true);//maybe not
         mMap.getUiSettings().setCompassEnabled(true);
-        mMap.setPadding(10,10,10,100);
+
+
+
+
+        //move map to user
+        FusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    LatLng poss = new LatLng(location.getLatitude(),location.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom( poss, 15));
+                } else{
+                    makeToast("poss Null\nPlease check location");
+                }
+            }
+        });
+
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
-//        Toast.makeText(this, "Button", Toast.LENGTH_SHORT).show();
+//        Mayyyyybe have a centering map splash
         return false;
     }
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        makeToast("This is you");
+    }
+
+    @Override
+    public void onPoiClick(PointOfInterest poi) {
+
+        //placeId to place type method needed here
+        PlacesClient placesClient = Places.createClient(this);
+        String placeId = poi.placeId;
+        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.TYPES);
+        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
+
+        placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+            @Override
+            public void onSuccess(FetchPlaceResponse fetchPlaceResponse) {
+                Place place = fetchPlaceResponse.getPlace();
+                makeToast(place.getTypes().toString());
+
+            }
+        });
+    }
+
+
+
+    private void makeToast(String words) {
+        Toast.makeText(this, words, Toast.LENGTH_SHORT).show();
     }
 }
