@@ -1,6 +1,6 @@
 package com.example.zombiealpha;
 
-public class Item {
+class Loot {
 
     String Title;
     String Description;

@@ -1,5 +1,5 @@
 package com.example.zombiealpha;
 
-public class Wepon extends Item {
+public class Wepon extends Loot {
     int Damage;
 }

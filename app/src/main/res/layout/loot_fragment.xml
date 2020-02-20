@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorPrimaryDark">
+
+    <TextView
+        android:id="@+id/lootHeader"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Yay Loot"
+        app:layout_constraintBottom_toTopOf="@+id/lootView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/but_finLoot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootView12"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/lootView1"
+        android:layout_width="81dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="No loot here"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/lootView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootHeader" />
+
+    <TextView
+        android:id="@+id/lootView2"
+        android:layout_width="81dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:text="No loot here"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootView1" />
+
+    <TextView
+        android:id="@+id/lootView3"
+        android:layout_width="81dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:text="No loot here"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootView2" />
+
+    <TextView
+        android:id="@+id/lootView4"
+        android:layout_width="81dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:text="No loot here"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootView3" />
+
+    <TextView
+        android:id="@+id/lootView5"
+        android:layout_width="81dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:text="No loot here"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootView4" />
+
+    <TextView
+        android:id="@+id/lootView6"
+        android:layout_width="81dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:text="No loot here"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootView5" />
+
+    <TextView
+        android:id="@+id/lootView11"
+        android:layout_width="81dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:text="No loot here"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootView6" />
+
+    <TextView
+        android:id="@+id/lootView12"
+        android:layout_width="81dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:text="No loot here"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lootView11" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,14 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -49,15 +48,6 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //navigation
-        Button leaveMap = findViewById(R.id.leaveMap);
-        leaveMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PlayerInv.class);
-                view.getContext().startActivity(intent);}
-        });
-
         //location
         FusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -73,7 +63,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-//perm check
+    //perm check
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
@@ -163,9 +153,12 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
     }
 
     @Override
-    public void onPoiClick(PointOfInterest poi) {
+    public void onPoiClick(final PointOfInterest poi) {
+        //distance check and throw out if to far
 
-        //placeId to place type method needed here
+        //great place to think about a caching system for types.. to cut down on requests
+
+        //placeId to place type method
         PlacesClient placesClient = Places.createClient(this);
         String placeId = poi.placeId;
         List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.TYPES);
@@ -175,11 +168,33 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
             @Override
             public void onSuccess(FetchPlaceResponse fetchPlaceResponse) {
                 Place place = fetchPlaceResponse.getPlace();
-                makeToast(place.getTypes().toString());
-
+                PlaceDataHolder holder = new PlaceDataHolder(place);
+                String placeName = poi.name;
+                makeLootFragment(holder,placeName);
+                //play searching\looting SoundFX
             }
         });
     }
+
+    private void makeLootFragment(PlaceDataHolder _holder,String name){
+
+        //pack it for sending
+        Bundle lootBundle = new Bundle();
+
+        lootBundle.putParcelable("bPlace" , _holder);
+        lootBundle.putString("bName",name);
+
+        FragmentManager lootFragMan = getSupportFragmentManager();
+        FragmentTransaction LootTrans = lootFragMan.beginTransaction();
+        LootFragment lootFragment = new LootFragment();
+        lootFragment.setArguments(lootBundle);
+        LootTrans.add(R.id.lootContainer,lootFragment);
+        LootTrans.addToBackStack("LootStack");
+        LootTrans.commit();
+
+    }
+
+
 
 
 

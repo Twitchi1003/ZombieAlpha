@@ -1,28 +1,23 @@
 package com.example.zombiealpha;
 
 import android.content.Context;
-import android.media.Image;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.Inflater;
 
 public class InventoryAdaptor extends RecyclerView.Adapter<InventoryAdaptor.InventoryViewHolder> {
 
-    private ArrayList<Item> Inventory;
+    private ArrayList<Loot> Inventory;
     private Context context;
 
-    InventoryAdaptor(ArrayList<Item> _inventory, Context _context) {
+    InventoryAdaptor(ArrayList<Loot> _inventory, Context _context) {
         Inventory = _inventory;
         this.context = _context;
     }
@@ -30,14 +25,14 @@ public class InventoryAdaptor extends RecyclerView.Adapter<InventoryAdaptor.Inve
     @NonNull
     @Override
     public InventoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //create holder Variable view and pass in "inflated" layout (inventorylayout)
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.inventorylayout, parent,false);
+        //create holder Variable view and pass in "inflated" layout (inventory_recycler_layout)
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.inventory_recycler_layout, parent,false);
         return new InventoryViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull InventoryViewHolder holder, int position) {
-        Item item =  Inventory.get(position);
+        Loot item =  Inventory.get(position);
 
         holder.TitleText.setText(item.Title);
         holder.DescriptionText.setText(item.Description);
@@ -73,7 +68,7 @@ public class InventoryAdaptor extends RecyclerView.Adapter<InventoryAdaptor.Inve
         @Override
         public boolean onLongClick(View v) {
             int  pos  = getLayoutPosition();
-            Item offender = Inventory.get(pos);
+            Loot offender = Inventory.get(pos);
             ((CharacterSheet) context.getApplicationContext()).removeFromInv(offender);
             notifyItemRemoved(pos);
             return true;

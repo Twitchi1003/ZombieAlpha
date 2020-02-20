@@ -1,6 +1,6 @@
 package com.example.zombiealpha;
 
-public class Food extends Item {
+public class Food extends Loot {
 
 
     float HPRegen = 0f;

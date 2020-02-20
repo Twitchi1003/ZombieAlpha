@@ -63,21 +63,21 @@ public class CharacterSheet extends Application {
 
     //inventory
 
-    List<Item> Inventory = new ArrayList<>();
+    List<Loot> Inventory = new ArrayList<>();
 
-        public List<Item> getInventory() {
+        public List<Loot> getInventory() {
             return Inventory;
             }
 
-        public void addToInv(Item Item){
+        public void addToInv(Loot Item){
             Inventory.add(Item);
         }
 
-        public void removeFromInv(Item item){
+        public void removeFromInv(Loot item){
             Inventory.remove(item);
         }
 
-        public Item getSingleInv (int Index){
+        public Loot getSingleInv (int Index){
             return Inventory.get(Index);
         }
 }

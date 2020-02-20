@@ -19,7 +19,7 @@ public class PlayerInv extends AppCompatActivity {
     private int BodyTemp = 0;
     private int Calories = 0;
     private int Thirst = 0;
-    private ArrayList<Item> Inv;
+    private ArrayList<Loot> Inv;
 
     private RecyclerView InventoryRecycler;
     private RecyclerView.Adapter InvAdapter;
@@ -48,7 +48,7 @@ public class PlayerInv extends AppCompatActivity {
 
 
 
-        Inv = (ArrayList<Item>) ((CharacterSheet) this.getApplication()).getInventory();
+        Inv = (ArrayList<Loot>) ((CharacterSheet) this.getApplication()).getInventory();
         //Inv is player inventory.. need to get into adapter
 
         RecyclerView InventoryRecycler = findViewById(R.id.InventoryRecyclerView);
