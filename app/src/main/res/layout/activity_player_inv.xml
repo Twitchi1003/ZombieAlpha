@@ -30,9 +30,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/your_health"
         app:layout_constraintEnd_toStartOf="@+id/healthDisplay"
-        app:layout_constraintStart_toStartOf="@+id/characterInventoryPageHeader"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/characterInventoryPageHeader" />
 
     <TextView
