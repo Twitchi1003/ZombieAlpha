@@ -2,6 +2,8 @@ package com.example.zombiealpha;
 
 import android.app.Application;
 
+import com.example.zombiealpha.LootClasses.Loot;
+
 import java.util.ArrayList;
 import java.util.List;
 
