@@ -50,8 +50,8 @@ public class PlayerInv extends AppCompatActivity {
 
 
 
+        //Inventory Creation
         Inv = (ArrayList<Loot>) ((CharacterSheet) this.getApplication()).getInventory();
-        //Inv is player inventory.. need to get into adapter
 
         RecyclerView InventoryRecycler = findViewById(R.id.InventoryRecyclerView);
         InventoryRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -69,5 +69,18 @@ public class PlayerInv extends AppCompatActivity {
                 view.getContext().startActivity(intent);}
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //rebuild inventory should do all stats
+        Inv = (ArrayList<Loot>) ((CharacterSheet) this.getApplication()).getInventory();
+
+        RecyclerView InventoryRecycler = findViewById(R.id.InventoryRecyclerView);
+        InventoryRecycler.setLayoutManager(new LinearLayoutManager(this));
+        InvAdapter = new InventoryAdaptor(Inv,this);
+        InventoryRecycler.setAdapter(InvAdapter);
     }
 }

@@ -17,14 +17,15 @@ import androidx.fragment.app.Fragment;
 import com.example.zombiealpha.LootClasses.Loot;
 import com.google.android.libraries.places.api.model.Place;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class LootFragment extends Fragment implements View.OnClickListener {
+public class LootFragment extends Fragment {
 
     private static final String TAG = "Loot Frag Setup";
 
-    View view;
+    private View view;
 
 
     @Nullable
@@ -48,13 +49,28 @@ public class LootFragment extends Fragment implements View.OnClickListener {
 
             Loot lootHolder = new Loot();
 
-            Loot potentialLoot = lootHolder.RollLoot(type);
+            final Loot potentialLoot = lootHolder.RollLoot(type);
 
-            TextView lootView = (TextView) lootField.getChildAt(i);
+            final TextView lootView = (TextView) lootField.getChildAt(i);
 
             try {
                 lootView.setText(potentialLoot.Title);
                 lootView.setVisibility(View.VISIBLE);
+                lootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO launch new frag with loot displayed, want/discard
+                        if (potentialLoot.Title == "Empty"){
+                            makeToast("Nothing There");
+                        } else
+                        {
+                        //TODO add encumbrance check
+                            addLoot(potentialLoot);
+                            lootView.setText("Empty");
+                        }
+
+                    }
+                });
             }
             catch (Exception e){
                 Log.e(TAG,"Oh Noe " + e);
@@ -67,8 +83,9 @@ public class LootFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void onClick(View v) {
+    private void addLoot(Loot loot){
+        ((CharacterSheet) this.getActivity().getApplication()).addToInv(loot);
+        makeToast(loot.Title + "Added to inv");
     }
 
 
