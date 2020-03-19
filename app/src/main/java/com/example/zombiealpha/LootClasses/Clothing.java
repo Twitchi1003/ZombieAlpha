@@ -5,7 +5,7 @@ import com.google.android.libraries.places.api.model.Place;
 public class Clothing extends Loot {
     Float insulation;
     Float protection;
-//TODO OMG ALL THE CLOTHES
+
     public Clothing(Float roll, Place.Type type) {
         this.insulation = roll-0.5f;
         this.protection = roll*10f;

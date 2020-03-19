@@ -13,6 +13,7 @@ public class PlaceDataHolder implements Parcelable {
 
     private Place placeData;
 
+
     public PlaceDataHolder(Place _place){
         placeData = _place;
     }

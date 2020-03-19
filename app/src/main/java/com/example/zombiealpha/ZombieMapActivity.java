@@ -29,6 +29,7 @@ import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnPoiClickListener {
@@ -43,15 +44,15 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zombie_map);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+    // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //location
+    //location
         FusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        //places API stuff
+    //places API stuff
         apiKey  = getResources().getString(R.string.google_maps_key);
         Places.initialize(getApplicationContext(), apiKey);
 
@@ -152,33 +153,33 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         makeToast("This is you");
     }
 
+
     @Override
     public void onPoiClick(final PointOfInterest poi) {
-        //distance check and throw out if to far
+        //this can take time.. place a "please wait" or "working on it"
 
-        //great place to think about a caching system for types.. to cut down on requests
+        final String placeName = poi.name;
 
-        //placeId to place type method
-        PlacesClient placesClient = Places.createClient(this);
-        String placeId = poi.placeId;
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.TYPES);
-        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
 
-        placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
-            @Override
-            public void onSuccess(FetchPlaceResponse fetchPlaceResponse) {
-                Place place = fetchPlaceResponse.getPlace();
-                PlaceDataHolder holder = new PlaceDataHolder(place);
-                String placeName = poi.name;
-                makeLootFragment(holder,placeName);
-                //play searching\looting SoundFX
+    //POI Cool Down
+        Date currentTime = new Date();
+        Date lastTime = ((CharacterSheet) this.getApplication()).GetCoolDown(placeName);
+
+        if (lastTime == null){
+            makeToast("Looks fresh.. No footprints in the dust");
+            doLOOT(poi, currentTime);
+        } else {
+            float timeDiff =  currentTime.getTime() - lastTime.getTime();
+                if (timeDiff < 86400/*000*/){//TODO reset cool down timer to a day
+                    doLOOT(poi, currentTime);
+                } else {
+                    makeToast("The dust still has your foot prints in it "+" nothing looks to have changed " + timeDiff);
+                }
             }
-        });
     }
 
     private void makeLootFragment(PlaceDataHolder _holder,String name){
 
-        //pack it for sending
         Bundle lootBundle = new Bundle();
 
         lootBundle.putParcelable("bPlace" , _holder);
@@ -191,14 +192,31 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         LootTrans.add(R.id.lootContainer,lootFragment);
         LootTrans.addToBackStack("LootStack");
         LootTrans.commit();
+    }
 
+    private void doLOOT(PointOfInterest poi, Date currentTime){
+        final String placeName = poi.name;
+        PlacesClient placesClient = Places.createClient(this);
+        String placeId = poi.placeId;
+        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.TYPES);
+        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
+
+
+        placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+            @Override
+            public void onSuccess(FetchPlaceResponse fetchPlaceResponse) {
+                Place place = fetchPlaceResponse.getPlace();
+                PlaceDataHolder holder = new PlaceDataHolder(place);
+
+                makeLootFragment(holder,placeName);
+            }
+        });
+        ((CharacterSheet) this.getApplication()).SetCoolDown(placeName, currentTime);
     }
 
 
 
-
-
     private void makeToast(String words) {
-        Toast.makeText(this, words, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, words, Toast.LENGTH_LONG).show();
     }
 }

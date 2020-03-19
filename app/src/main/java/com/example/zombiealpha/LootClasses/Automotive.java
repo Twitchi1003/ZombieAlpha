@@ -1,5 +1,5 @@
 package com.example.zombiealpha.LootClasses;
-//TODO Batteries, Specific Tools, Fuel
+
 public class Automotive extends Loot {
 
     public Automotive(Float roll, String type) {

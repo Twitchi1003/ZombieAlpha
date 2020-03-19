@@ -21,13 +21,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/lootFeild"
+        android:id="@+id/lootField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimaryDark"
         android:clickable="true"
-        android:focusable="auto"
+        android:focusable="true"
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lootHeader">

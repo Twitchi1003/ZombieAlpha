@@ -1,11 +1,18 @@
 package com.example.zombiealpha;
 
 import android.app.Application;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.zombiealpha.LootClasses.Loot;
+import com.google.android.gms.maps.model.PointOfInterest;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+
 
 public class CharacterSheet extends Application {
 
@@ -16,7 +23,6 @@ public class CharacterSheet extends Application {
         public int getHealth() {
         return Health;
     }
-
         public void setHealth(int health) {
         Health = health;
     }
@@ -26,7 +32,6 @@ public class CharacterSheet extends Application {
         public int getBodyTemp() {
         return BodyTemp;
     }
-
         public void setBodyTemp(int bodyTemp) {
         BodyTemp = bodyTemp;
     }
@@ -36,7 +41,6 @@ public class CharacterSheet extends Application {
         public int getCalories() {
         return Calories;
     }
-
         public void setCalories(int calories) {
         Calories = calories;
     }
@@ -46,7 +50,6 @@ public class CharacterSheet extends Application {
         public int getThirst() {
         return Thirst;
     }
-
         public void setThirst(int thirst) {
         Thirst = thirst;
     }
@@ -56,7 +59,6 @@ public class CharacterSheet extends Application {
         public int getTodaysNoise() {
         return TodaysNoise;
     }
-
         public void setTodaysNoise(int todaysNoise) {
         TodaysNoise = todaysNoise;
     }
@@ -70,16 +72,27 @@ public class CharacterSheet extends Application {
         public List<Loot> getInventory() {
             return Inventory;
             }
-
         public void addToInv(Loot Item){
             Inventory.add(Item);
         }
-
         public void removeFromInv(Loot item){
             Inventory.remove(item);
         }
-
         public Loot getSingleInv (int Index){
             return Inventory.get(Index);
         }
+
+
+
+
+    //Time stamps
+    private HashMap<String, Date> coolDowns = new HashMap<>();
+
+        public HashMap GetAllCoolDowns() { return coolDowns; } //dev only
+        public Date GetCoolDown(String poi) {return coolDowns.get(poi);}
+        public Date SetCoolDown(String poi, Date date) {return coolDowns.put(poi, date);}
+
+        //public Date putIfAbsent(PointOfInterest poi, Date current) { return coolDowns.putIfAbsent(poi,current); } //this is to new for my phone
+
+
 }

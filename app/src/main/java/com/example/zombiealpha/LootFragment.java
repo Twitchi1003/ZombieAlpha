@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.example.zombiealpha.LootClasses.Loot;
 import com.google.android.libraries.places.api.model.Place;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,7 +40,7 @@ public class LootFragment extends Fragment {
         //loots
         PlaceDataHolder incoming = this.getArguments().getParcelable("bPlace");
         List<Place.Type> types = incoming.getTypes();
-        ViewGroup lootField = view.findViewById(R.id.lootFeild);
+        ViewGroup lootField = view.findViewById(R.id.lootField);
         int  lootSize = types.size();
         for (int i = 0; i < lootSize;i++){
 
@@ -59,12 +58,10 @@ public class LootFragment extends Fragment {
                 lootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO launch new frag with loot displayed, want/discard
-                        if (potentialLoot.Title == "Empty"){
+                        if (potentialLoot.Title.equals("Empty")){
                             makeToast("Nothing There");
                         } else
                         {
-                        //TODO add encumbrance check
                             addLoot(potentialLoot);
                             lootView.setText("Empty");
                         }
