@@ -8,9 +8,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -34,10 +36,14 @@ import java.util.List;
 
 public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnPoiClickListener {
 
+    private String TAG = "ZombieMapActivity";
+
     private GoogleMap mMap;
     private final int PERM_REQUEST_LOCATION_INT = 1;
     private FusedLocationProviderClient FusedLocationClient;
     private String apiKey;
+    private Context context = getApplication();
+
 
 
     @Override
@@ -57,9 +63,6 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         Places.initialize(getApplicationContext(), apiKey);
 
     }
-
-
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -135,7 +138,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                     LatLng poss = new LatLng(location.getLatitude(),location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom( poss, 15));
                 } else{
-                    makeToast("poss Null\nPlease check location");
+                    makeToast("poss Null\nPlease check location settings");
                 }
             }
         });
@@ -153,29 +156,49 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         makeToast("This is you");
     }
 
-
     @Override
     public void onPoiClick(final PointOfInterest poi) {
-        //this can take time.. place a "please wait" or "working on it"
 
-        final String placeName = poi.name;
+        makeToast("Scouting Location");
+        FusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    try {
+                        float[] distance = new float[3];//daddy google gives strange returns
+                        Location.distanceBetween(location.getLatitude(),location.getLongitude(),poi.latLng.latitude,poi.latLng.longitude,distance/*DataStore Location*/);
+                        int distanceInMeters = (int) Math.floor(distance[0]);
+                        if (distanceInMeters < 30){
+                            //Zombie Check
+                            /*cooldown*/
+                            String placeName = poi.name;
+                            Date currentTime = new Date();
+                            Date lastTime = getCooldown(placeName);
+                            if (lastTime == null) {
+                                //First Time
+                                makeToast("Looks fresh.. No footprints in the dust");
+                                doLOOT(poi, currentTime);
+                            } else {
+                                float timeDiff = currentTime.getTime() - lastTime.getTime();
+                                if (timeDiff > 864000/*00*/) {//TODO reset cool down timer to a day
+                                    //give stuff
+                                    doLOOT(poi, currentTime);
+                                } else {
+                                    //to soon
+                                    makeToast("The dust still has your foot prints in it " + " looks like nothing changed ");
+                                }
+                            }
+                        } else
+                            makeToast("To far away");
 
-
-    //POI Cool Down
-        Date currentTime = new Date();
-        Date lastTime = ((CharacterSheet) this.getApplication()).GetCoolDown(placeName);
-
-        if (lastTime == null){
-            makeToast("Looks fresh.. No footprints in the dust");
-            doLOOT(poi, currentTime);
-        } else {
-            float timeDiff =  currentTime.getTime() - lastTime.getTime();
-                if (timeDiff < 86400/*000*/){//TODO reset cool down timer to a day
-                    doLOOT(poi, currentTime);
-                } else {
-                    makeToast("The dust still has your foot prints in it "+" nothing looks to have changed " + timeDiff);
+                    } catch(Exception e) {
+                        Log.e(TAG, "Distance went wrong " + e);
+                    }
+                } else{
+                    makeToast("Last Known Location is {Null}\nPlease check location settings");
                 }
             }
+        });
     }
 
     private void makeLootFragment(PlaceDataHolder _holder,String name){
@@ -214,9 +237,37 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         ((CharacterSheet) this.getApplication()).SetCoolDown(placeName, currentTime);
     }
 
+    private Date getCooldown(String placeName){
+        return ((CharacterSheet) this.getApplication()).GetCoolDown(placeName);
+    }
+
+//    private void ZombieCheck(){
+//        double threshold = 2;
+//        double chance = Math.random() + ((CharacterSheet) this.getApplication()).getTodaysNoise();
+//        if(chance > threshold){
+//            //make Zombie
+//            //make zombie Frag
+//        } else {
+//            makeToast("Looks Clear");
+//        }
+//    }
+
+//    public void makeZombieFrag(Zombie zombie){
+//        Bundle lootBundle = new Bundle();
+//
+//        lootBundle.putParcelable("bZombie" , zombie);
+//
+//        FragmentManager zombieFragMan = getSupportFragmentManager();
+//        FragmentTransaction zombieTrans = zombieFragMan.beginTransaction();
+//        ZombieFragment zombieFragment = new ZombieFragment();
+//        zombieFragment.setArguments(lootBundle);
+//        zombieTrans.add(R.id.zombieContainer,zombieFragment);
+//        zombieTrans.addToBackStack("LootStack");
+//        zombieTrans.commit();
+//    }
 
 
     private void makeToast(String words) {
-        Toast.makeText(this, words, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, words, Toast.LENGTH_SHORT).show();
     }
 }
