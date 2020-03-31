@@ -56,12 +56,11 @@ public class CharacterSheet extends Application {
 
     private int TodaysNoise = 0;
 
-        public int getTodaysNoise() {
-        return TodaysNoise;
-    }
-        public void setTodaysNoise(int todaysNoise) {
-        TodaysNoise = todaysNoise;
-    }
+        public void setTodaysNoise(int todaysNoise) {TodaysNoise = todaysNoise;}//dev only
+
+        public int getTodaysNoise() {return TodaysNoise;}
+        public void addNoise (int noise) {TodaysNoise = TodaysNoise + noise;}
+        public void removeNoise (int noise) {TodaysNoise = TodaysNoise - noise;}
 
 
 
@@ -89,6 +88,7 @@ public class CharacterSheet extends Application {
     private HashMap<String, Date> coolDowns = new HashMap<>();
 
         public HashMap GetAllCoolDowns() { return coolDowns; } //dev only
+
         public Date GetCoolDown(String poi) {return coolDowns.get(poi);}
         public Date SetCoolDown(String poi, Date date) {return coolDowns.put(poi, date);}
 

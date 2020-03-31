@@ -159,6 +159,8 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onPoiClick(final PointOfInterest poi) {
 
+        ((CharacterSheet) this.getApplication()).addNoise(1);
+
         makeToast("Scouting Location");
         FusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
@@ -169,7 +171,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                         Location.distanceBetween(location.getLatitude(),location.getLongitude(),poi.latLng.latitude,poi.latLng.longitude,distance/*DataStore Location*/);
                         int distanceInMeters = (int) Math.floor(distance[0]);
                         if (distanceInMeters < 30){
-                            //Zombie Check
+                            ZombieCheck();
                             /*cooldown*/
                             String placeName = poi.name;
                             Date currentTime = new Date();
@@ -212,7 +214,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         FragmentTransaction LootTrans = lootFragMan.beginTransaction();
         LootFragment lootFragment = new LootFragment();
         lootFragment.setArguments(lootBundle);
-        LootTrans.add(R.id.lootContainer,lootFragment);
+        LootTrans.add(R.id.lootFragment,lootFragment);
         LootTrans.addToBackStack("LootStack");
         LootTrans.commit();
     }
@@ -241,30 +243,29 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         return ((CharacterSheet) this.getApplication()).GetCoolDown(placeName);
     }
 
-//    private void ZombieCheck(){
-//        double threshold = 2;
-//        double chance = Math.random() + ((CharacterSheet) this.getApplication()).getTodaysNoise();
-//        if(chance > threshold){
-//            //make Zombie
-//            //make zombie Frag
-//        } else {
-//            makeToast("Looks Clear");
-//        }
-//    }
+    private void ZombieCheck(){
+        double threshold = /*18*/2;  //todo add random back to zombie check
+        double chance = /*(Math.random()*10) +*/ ((CharacterSheet) this.getApplication()).getTodaysNoise();
+        if(chance > threshold){
+            Zombie zombie = new Zombie();
+            makeZombieFrag(zombie);
+            ((CharacterSheet) this.getApplication()).removeNoise(11);
+        }
+    }
 
-//    public void makeZombieFrag(Zombie zombie){
-//        Bundle lootBundle = new Bundle();
-//
-//        lootBundle.putParcelable("bZombie" , zombie);
-//
-//        FragmentManager zombieFragMan = getSupportFragmentManager();
-//        FragmentTransaction zombieTrans = zombieFragMan.beginTransaction();
-//        ZombieFragment zombieFragment = new ZombieFragment();
-//        zombieFragment.setArguments(lootBundle);
-//        zombieTrans.add(R.id.zombieContainer,zombieFragment);
-//        zombieTrans.addToBackStack("LootStack");
-//        zombieTrans.commit();
-//    }
+    public void makeZombieFrag(Zombie zombie){
+        Bundle lootBundle = new Bundle();
+
+        lootBundle.putParcelable("bZombie" , zombie);
+
+        FragmentManager zombieFragMan = getSupportFragmentManager();
+        FragmentTransaction zombieTrans = zombieFragMan.beginTransaction();
+        CombatFragment zombieFragment = new CombatFragment();
+        zombieFragment.setArguments(lootBundle);
+        zombieTrans.add(R.id.ZombieContainer,zombieFragment);
+        zombieTrans.addToBackStack("LootStack");
+        zombieTrans.commit();
+    }
 
 
     private void makeToast(String words) {

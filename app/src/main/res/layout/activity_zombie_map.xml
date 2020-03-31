@@ -14,7 +14,14 @@
     tools:context=".ZombieMapActivity" />
 
     <FrameLayout
-        android:id="@+id/lootContainer"
+        android:id="@+id/lootFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16sp"
+        />
+    <FrameLayout
+        android:id="@+id/ZombieContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
