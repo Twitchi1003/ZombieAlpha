@@ -1,12 +1,8 @@
 package com.example.zombiealpha;
 
 import android.app.Application;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 
 import com.example.zombiealpha.LootClasses.Loot;
-import com.google.android.gms.maps.model.PointOfInterest;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,40 +15,28 @@ public class CharacterSheet extends Application {
     //stats
 
     private int Health = 10;
+        public int getHealth() {return Health;}
+        public void addHealth(int healing) {Health += healing;}
+        public void removeHealth(int damage) {Health -= damage;}
 
-        public int getHealth() {
-        return Health;
-    }
-        public void setHealth(int health) {
-        Health = health;
-    }
 
     private int BodyTemp = 36;
-
-        public int getBodyTemp() {
-        return BodyTemp;
-    }
-        public void setBodyTemp(int bodyTemp) {
-        BodyTemp = bodyTemp;
-    }
+        public int getBodyTemp() {return BodyTemp;}
+        public void addBodyTemp(int heating) {BodyTemp += heating;}
+        public void removeBodyTemp(int cooling) {BodyTemp -= cooling;}
 
     private int Calories = 2000;
+        public int getCalories() {return Calories;}
+        public void addCalories(int calories) {Calories += calories;}
+        public void removeCalories(int calories) {Calories -= calories;}
 
-        public int getCalories() {
-        return Calories;
-    }
-        public void setCalories(int calories) {
-        Calories = calories;
-    }
 
     private int Thirst = 100;
+        public int getThirst() {return Thirst;}
+        public void addThirst(int thirst) {Thirst += thirst;}
+        public void removeThirst(int thirst) {Thirst -= thirst;}
 
-        public int getThirst() {
-        return Thirst;
-    }
-        public void setThirst(int thirst) {
-        Thirst = thirst;
-    }
+
 
     private int TodaysNoise = 0;
 
@@ -68,20 +52,18 @@ public class CharacterSheet extends Application {
 
     List<Loot> Inventory = new ArrayList<>();
 
-        public List<Loot> getInventory() {
-            return Inventory;
-            }
-        public void addToInv(Loot Item){
-            Inventory.add(Item);
-        }
-        public void removeFromInv(Loot item){
-            Inventory.remove(item);
-        }
-        public Loot getSingleInv (int Index){
-            return Inventory.get(Index);
-        }
+        public List<Loot> getInventory() {return Inventory;}
+        public void addToInv(Loot Item){Inventory.add(Item);}
+        public void removeFromInv(Loot item){Inventory.remove(item);}
+        public Loot getSingleInv (int Index){return Inventory.get(Index);}
 
+    private Loot Hand;
+         public Loot getHand() {return Hand;}
+         public void setHand(Loot loot){Hand = loot;}
 
+    private Loot Pocket;
+         public Loot getPocket() {return Pocket;}
+         public void setPocket(Loot loot){Pocket = loot;}
 
 
     //Time stamps

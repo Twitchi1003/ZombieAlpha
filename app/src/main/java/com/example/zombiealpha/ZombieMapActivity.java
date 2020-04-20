@@ -162,7 +162,8 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         ((CharacterSheet) this.getApplication()).addNoise(1);
 
         makeToast("Scouting Location");
-        FusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+        FusedLocationClient.getLastLocation().addOnSuccessListener(this
+                , new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
@@ -254,14 +255,15 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
     }
 
     public void makeZombieFrag(Zombie zombie){
-        Bundle lootBundle = new Bundle();
+        Bundle zebBundle = new Bundle();
 
-        lootBundle.putParcelable("bZombie" , zombie);
+        zebBundle.putParcelable("bZombie" , zombie);
+
 
         FragmentManager zombieFragMan = getSupportFragmentManager();
         FragmentTransaction zombieTrans = zombieFragMan.beginTransaction();
         CombatFragment zombieFragment = new CombatFragment();
-        zombieFragment.setArguments(lootBundle);
+        zombieFragment.setArguments(zebBundle);
         zombieTrans.add(R.id.ZombieContainer,zombieFragment);
         zombieTrans.addToBackStack("LootStack");
         zombieTrans.commit();

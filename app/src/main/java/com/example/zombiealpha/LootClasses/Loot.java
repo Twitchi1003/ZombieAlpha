@@ -1,5 +1,6 @@
 package com.example.zombiealpha.LootClasses;
 
+
 import android.util.Log;
 
 import com.google.android.libraries.places.api.model.Place;
@@ -10,6 +11,7 @@ public class Loot {
     public String Title; //Name but name is a bad var name :P
     public String Description;
     float Weight;
+    public int pic;
 
 //        this.Title = "Name";
 //        this.Description = "Some words that relate to the appearance";
@@ -20,6 +22,7 @@ public class Loot {
         this.Title = "Empty";
         this.Description = "Nothing to be found";
         this.Weight = 9000f;
+        //pic = emptyBox
     }
 
 

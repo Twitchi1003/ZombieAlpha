@@ -1,35 +1,28 @@
 package com.example.zombiealpha;
 
-import android.media.Image;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 class Zombie implements Parcelable {
-    int Health = 10;
-    int damage = 1;
-    Image picture; //not parceled?
+
+    int Health;
+        public int getHealth() {return Health;}
+        public void addHealth(int healing) {Health += healing;}
+        public void removeHealth(int damage) {Health -= damage;}
+    int damage;
+    public int picture; //stores reference INT
 
     public Zombie() {
-
+            this.Health=3;
+            this.damage=1;
+            this.picture = R.drawable./*ic_*/temp_zombie;//scalable asset crashes setBackground on ImageView
     }
 
-    //parcel stuff
-
-
+    //parcels
     protected Zombie(Parcel in) {
         Health = in.readInt();
         damage = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(Health);
-        dest.writeInt(damage);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<Zombie> CREATOR = new Creator<Zombie>() {
@@ -43,4 +36,15 @@ class Zombie implements Parcelable {
             return new Zombie[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(Health);
+        dest.writeInt(damage);
+    }
 }
