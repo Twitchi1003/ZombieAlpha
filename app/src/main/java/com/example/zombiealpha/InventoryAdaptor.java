@@ -1,13 +1,16 @@
 package com.example.zombiealpha;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zombiealpha.LootClasses.Loot;
@@ -69,14 +72,31 @@ public class InventoryAdaptor extends RecyclerView.Adapter<InventoryAdaptor.Inve
 
         @Override
         public boolean onLongClick(View v) {
-            int  pos  = getLayoutPosition();
-            Loot offender = Inventory.get(pos);
-            ((CharacterSheet) context.getApplicationContext()).removeFromInv(offender);
-            notifyItemRemoved(pos);
+
+
+            AlertDialog.Builder invDialog = new AlertDialog.Builder(context);
+            invDialog.setTitle("Inventory");
+            invDialog.setMessage("use v to get item name");
+            invDialog.setCancelable(true);
+            invDialog.setPositiveButton("use", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(context, "Implementation is next", Toast.LENGTH_SHORT).show();
+                }
+            });
+            invDialog.setNegativeButton("Drop", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    int pos = getLayoutPosition();
+                    Loot offender = Inventory.get(pos);
+                    ((CharacterSheet) context.getApplicationContext()).removeFromInv(offender);
+                    notifyItemRemoved(pos);
+                }
+            });
+            AlertDialog alertDialog = invDialog.create();
+            alertDialog.show();
+
             return true;
         }
     }
-
-
-
 }

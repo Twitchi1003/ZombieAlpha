@@ -12,10 +12,14 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,6 +48,8 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
     private String apiKey;
     private Context context = getApplication();
 
+    private Location oldLoc , newLoc;
+
 
 
     @Override
@@ -63,6 +69,8 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         Places.initialize(getApplicationContext(), apiKey);
 
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -140,10 +148,11 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                 } else{
                     makeToast("poss Null\nPlease check location settings");
                 }
+                startLocationUpdates();
             }
         });
-
     }
+
 
     @Override
     public boolean onMyLocationButtonClick() {
@@ -156,6 +165,32 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         makeToast("This is you");
     }
 
+    private void startLocationUpdates() {
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);//todo make into variable for user control
+        locationRequest.setInterval(80000);
+        locationRequest.setFastestInterval(10000);
+
+        FusedLocationClient.requestLocationUpdates(locationRequest,new LocationCallback(){
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+
+                List locations = locationResult.getLocations();
+                Location resultLocation = (Location) locations.get(0);
+
+                if (oldLoc!=null) {
+                    newLoc = resultLocation;
+                    Float distance = oldLoc.distanceTo(newLoc);
+                    removeCals(distance);
+                    oldLoc = newLoc;
+                } else { oldLoc = resultLocation;}
+            }
+        },Looper.getMainLooper());
+    }
+
+
+//loot
     @Override
     public void onPoiClick(final PointOfInterest poi) {
 
@@ -192,7 +227,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                                 }
                             }
                         } else
-                            makeToast("To far away");
+                            makeToast("Too far away");
 
                     } catch(Exception e) {
                         Log.e(TAG, "Distance went wrong " + e);
@@ -244,6 +279,11 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         return ((CharacterSheet) this.getApplication()).GetCoolDown(placeName);
     }
 
+    private void removeCals(Float distance) {
+        ((CharacterSheet) this.getApplication()).removeCalories(distance);
+    }
+
+//combat
     private void ZombieCheck(){
         double threshold = /*18*/2;  //todo add random back to zombie check
         double chance = /*(Math.random()*10) +*/ ((CharacterSheet) this.getApplication()).getTodaysNoise();
@@ -269,7 +309,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
         zombieTrans.commit();
     }
 
-
+//helpers
     private void makeToast(String words) {
         Toast.makeText(this, words, Toast.LENGTH_SHORT).show();
     }

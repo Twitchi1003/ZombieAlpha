@@ -25,10 +25,10 @@ public class CharacterSheet extends Application {
         public void addBodyTemp(int heating) {BodyTemp += heating;}
         public void removeBodyTemp(int cooling) {BodyTemp -= cooling;}
 
-    private int Calories = 2000;
-        public int getCalories() {return Calories;}
-        public void addCalories(int calories) {Calories += calories;}
-        public void removeCalories(int calories) {Calories -= calories;}
+    private float Calories = 2000;
+        public float getCalories() {return Calories;}
+        public void addCalories(float calories) {Calories += calories;}
+        public void removeCalories(float calories) {Calories -= calories;}
 
 
     private int Thirst = 100;

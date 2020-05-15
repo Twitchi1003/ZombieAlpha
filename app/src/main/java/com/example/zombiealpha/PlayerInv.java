@@ -19,7 +19,7 @@ public class PlayerInv extends AppCompatActivity {
 
     private int Health = 0;
     private int BodyTemp = 0;
-    private int Calories = 0;
+    private float Calories = 0;
     private int Thirst = 0;
     private ArrayList<Loot> Inv;
 
@@ -31,26 +31,7 @@ public class PlayerInv extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_inv);
 
-        //Grab Stats from global CharacterSheet
-        TextView PlayerHealth = findViewById(R.id.healthDisplay);
-        Health = ((CharacterSheet) this.getApplication()).getHealth();
-        PlayerHealth.setText(Integer.toString(Health));
-
-        TextView PlayerTemp = findViewById(R.id.tempratureDisplay);
-        BodyTemp =  ((CharacterSheet) this.getApplication()).getBodyTemp();
-        PlayerTemp.setText(Integer.toString(BodyTemp));
-
-        TextView PlayerCalories = findViewById(R.id.calorieDisplay);
-        Calories =  ((CharacterSheet) this.getApplication()).getCalories();
-        PlayerCalories.setText(Integer.toString(Calories));
-
-        TextView PlayerThirst = findViewById(R.id.thirstDisplay);
-        Thirst =  ((CharacterSheet) this.getApplication()).getThirst();
-        PlayerThirst.setText(Integer.toString(Thirst));
-
-
-
-        //Inventory Creation
+         //Inventory Creation
         Inv = (ArrayList<Loot>) ((CharacterSheet) this.getApplication()).getInventory();
 
         RecyclerView InventoryRecycler = findViewById(R.id.InventoryRecyclerView);
@@ -75,7 +56,25 @@ public class PlayerInv extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        //rebuild inventory should do all stats
+
+        //Grab Stats from global CharacterSheet
+        TextView PlayerHealth = findViewById(R.id.healthDisplay);
+        Health = ((CharacterSheet) this.getApplication()).getHealth();
+        PlayerHealth.setText(Integer.toString(Health));
+
+        TextView PlayerTemp = findViewById(R.id.tempratureDisplay);
+        BodyTemp =  ((CharacterSheet) this.getApplication()).getBodyTemp();
+        PlayerTemp.setText(Integer.toString(BodyTemp));
+
+        TextView PlayerCalories = findViewById(R.id.calorieDisplay);
+        Calories =  ((CharacterSheet) this.getApplication()).getCalories();
+        PlayerCalories.setText(Float.toString(Calories));
+
+        TextView PlayerThirst = findViewById(R.id.thirstDisplay);
+        Thirst =  ((CharacterSheet) this.getApplication()).getThirst();
+        PlayerThirst.setText(Integer.toString(Thirst));
+
+
         Inv = (ArrayList<Loot>) ((CharacterSheet) this.getApplication()).getInventory();
 
         RecyclerView InventoryRecycler = findViewById(R.id.InventoryRecyclerView);
