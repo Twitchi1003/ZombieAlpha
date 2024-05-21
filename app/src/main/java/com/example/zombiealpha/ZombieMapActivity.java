@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -191,7 +190,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
 
 
 //loot
-    @Override
+/*    @Override
     public void onPoiClick(final PointOfInterest poi) {
 
         ((CharacterSheet) this.getApplication()).addNoise(1);
@@ -204,11 +203,11 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                 if (location != null) {
                     try {
                         float[] distance = new float[3];//daddy google gives strange returns
-                        Location.distanceBetween(location.getLatitude(),location.getLongitude(),poi.latLng.latitude,poi.latLng.longitude,distance/*DataStore Location*/);
+                        Location.distanceBetween(location.getLatitude(),location.getLongitude(),poi.latLng.latitude,poi.latLng.longitude,distance*//*DataStore Location*//*);
                         int distanceInMeters = (int) Math.floor(distance[0]);
                         if (distanceInMeters < 30){
                             ZombieCheck();
-                            /*cooldown*/
+                            *//*cooldown*//*
                             String placeName = poi.name;
                             Date currentTime = new Date();
                             Date lastTime = getCooldown(placeName);
@@ -218,7 +217,7 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                                 doLOOT(poi, currentTime);
                             } else {
                                 float timeDiff = currentTime.getTime() - lastTime.getTime();
-                                if (timeDiff > 864000/*00*/) {//TODO reset cool down timer to a day
+                                if (timeDiff > 864000*//*00*//*) {//TODO reset cool down timer to a day
                                     //give stuff
                                     doLOOT(poi, currentTime);
                                 } else {
@@ -237,7 +236,17 @@ public class ZombieMapActivity extends FragmentActivity implements OnMapReadyCal
                 }
             }
         });
+    }*/
+@Override
+    public void onPoiClick(PointOfInterest poi) {
+        POIFragment fragment = POIFragment.newInstance(poi.name);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
+
 
     private void makeLootFragment(PlaceDataHolder _holder,String name){
 

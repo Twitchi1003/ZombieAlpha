@@ -1,11 +1,13 @@
 package com.example.zombiealpha.LootClasses;
 
-
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.zombiealpha.interfaces.Use;
 import com.google.android.libraries.places.api.model.Place;
 
-public class Loot {
+public class Loot implements Use {
     private static final String TAG = "Loot Class";
 
     public String Title; //Name but name is a bad var name :P
@@ -17,6 +19,10 @@ public class Loot {
 //        this.Description = "Some words that relate to the appearance";
 //        this.Weight = roll * 10;
 
+    public Boolean use(){
+        return false;
+    };
+
 
     public Loot(){
         this.Title = "Empty";
@@ -26,7 +32,7 @@ public class Loot {
     }
 
 
-    public Loot RollLoot(Place.Type type){
+    public static Loot RollLoot(Place.Type type){
         Loot result;
         float roll = (float)Math.random();
         String tableName;
@@ -237,6 +243,19 @@ public class Loot {
         }
         result = new Loot();
         return result;
+    }
+
+    @Override
+    public boolean use(Context c, Loot loot) {
+        if (loot != null){
+            //needs gravity and dressing, maybe random selecting of responses
+            Toast.makeText(c,"There is nothing I can do with this",Toast.LENGTH_SHORT);
+            return false;
+        } else {
+            Toast.makeText(c,"Button Broken, Item Null",Toast.LENGTH_SHORT);
+            return false;
+        }
+
     }
 }
 

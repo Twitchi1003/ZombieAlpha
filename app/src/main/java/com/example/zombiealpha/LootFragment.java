@@ -41,14 +41,12 @@ public class LootFragment extends Fragment {
         PlaceDataHolder incoming = this.getArguments().getParcelable("bPlace");
         List<Place.Type> types = incoming.getTypes();
         ViewGroup lootField = view.findViewById(R.id.lootField);
-        int  lootSize = types.size();
-        for (int i = 0; i < lootSize;i++){
+
+        for (int i = 0; i < types.size();i++){
 
             Place.Type type = types.get(i);
 
-            Loot lootHolder = new Loot();
-
-            final Loot potentialLoot = lootHolder.RollLoot(type);
+            final Loot potentialLoot = Loot.RollLoot(type);
 
             final TextView lootView = (TextView) lootField.getChildAt(i);
 

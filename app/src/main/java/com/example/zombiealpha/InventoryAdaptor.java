@@ -74,6 +74,7 @@ public class InventoryAdaptor extends RecyclerView.Adapter<InventoryAdaptor.Inve
         public boolean onLongClick(View v) {
 
 
+
             AlertDialog.Builder invDialog = new AlertDialog.Builder(context);
             invDialog.setTitle("Inventory");
             invDialog.setMessage("use v to get item name");
@@ -81,7 +82,12 @@ public class InventoryAdaptor extends RecyclerView.Adapter<InventoryAdaptor.Inve
             invDialog.setPositiveButton("use", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(context, "Implementation is next", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Implementation is next", Toast.LENGTH_SHORT).show();
+                    int pos = getLayoutPosition();
+                    Loot offender = ((CharacterSheet) context.getApplicationContext()).getSingleInv(pos);
+
+                    //get cals from offender, Add cals to player, remove offender from INV,remove poss from recycler
+                    //maybe need to do loot.use() and have use defined in items
                 }
             });
             invDialog.setNegativeButton("Drop", new DialogInterface.OnClickListener() {
