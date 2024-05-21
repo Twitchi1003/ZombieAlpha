@@ -27,4 +27,14 @@
         android:gravity="center"
         android:padding="16sp"
         />
-    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true" />
+
+
+</RelativeLayout>
